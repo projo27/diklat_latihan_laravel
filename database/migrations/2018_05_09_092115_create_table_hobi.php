@@ -14,6 +14,7 @@ class CreateTableHobi extends Migration
     {
         Schema::create('hobi', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nama_hobi');
             $table->timestamps();
         });
     }

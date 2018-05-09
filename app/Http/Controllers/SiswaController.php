@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Siswa;
 use App\Telepon;
 use App\Kelas;
+use App\Hobi;
 use Validator;
 use Session;
 use App\Http\Requests\SiswaRequest;
@@ -28,7 +29,8 @@ class SiswaController extends Controller
 
     public function create(){
         $list_kelas = Kelas::all();
-        return view('siswa.create', compact('list_kelas'));
+        $list_hobi = Hobi::all();
+        return view('siswa.create', compact('list_kelas', 'list_hobi'));
     }
 
     // INI YANG LAMA
@@ -59,6 +61,8 @@ class SiswaController extends Controller
         $telepon = new Telepon;
         $telepon->no_telepon = $request->input('no_telepon');
         $siswa->telepon()->save($telepon);
+
+        $siswa->hobi()->attach($request->input('hobi'));
 
         Session::flash('flash_msg', 'Data Berhasil disimpan');
         return redirect('siswa');

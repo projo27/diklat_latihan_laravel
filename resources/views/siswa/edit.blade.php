@@ -101,19 +101,24 @@
                     @endif
                 </div>
             </div>
-            <div class="col-md-4">
-                <select name="id_kelas" id="id_kelas" class="form-control">
-                    @foreach ($list_kelas as $kelas)
-                        <option value="{{ $kelas->id }}" @if ($siswa->id_kelas == $kelas->id)
-                            selected='sleected'
-                        @endif >{{ $kelas->nama_kelas }}</option>
-                    @endforeach
-                </select>
-                @if ($errors->has('id_kelas'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('id_kelas')}}
-                    </div>
-                @endif
+            <div class="form-group">
+                <label for="no_telepon" class="control-label">Kelas
+                    <span class="required">*</span>
+                </label>
+                <div class="col-md-4">
+                    <select name="id_kelas" id="id_kelas" class="form-control">
+                        @foreach ($list_kelas as $kelas)
+                            <option value="{{ $kelas->id }}" @if ($siswa->id_kelas == $kelas->id)
+                                selected='sleected'
+                            @endif >{{ $kelas->nama_kelas }}</option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('id_kelas'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ $errors->first('id_kelas')}}
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
         <br />

@@ -51,7 +51,17 @@
             </div>
             <div class="form-group">
                 <label for="no_telepon"> No Telp</label>
-                <input type="text" disabled class="form-control" name="no_telepon" id="no_telepon" placeholder="NO Telp" value="{{ !empty($murid->telepon->no_telepon) ? $anak->telepon->no_telepon : '-' }}">
+                <input type="text" disabled class="form-control" name="no_telepon" id="no_telepon" placeholder="NO Telp" value="{{ !empty($siswa->telepon->no_telepon) ? $siswa->telepon->no_telepon : '-' }}">
+            </div>
+            <div class="form-group">
+                <label for="kelas">Kelas</label>
+                <input type="text" disabled class="form-control" name="kelas" id="kelas" placeholder="Kelas" value="{{ !empty($siswa->kelas->nama_kelas) ? $siswa->kelas->nama_kelas : '-' }}">
+            </div>
+            <div class="form-group">
+                <label for="">Hobi : </label>
+                @foreach ($siswa->hobi as $hobi)
+                    <strong><span>{{ $hobi->nama_hobi}} </span></strong>,
+                @endforeach
             </div>
             {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
         </form>
