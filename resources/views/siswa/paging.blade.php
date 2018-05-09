@@ -27,15 +27,9 @@
           <i class="fa fa-table"></i> Daftar Siswa
       </div>
       <div class="card-body">
-          @if (Session::has('flash_msg'))
-              <div class="alert-success alert">
-                  <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                  {{Session::get('flash_msg')}}
-              </div>
-          @endif
           @if (!empty($siswa))
             <div class="table-responsive">
-                <table class="table table-bordered" width="100%">
+                <table class="table table-bordered" id="dataTable" width="100%">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -43,8 +37,6 @@
                             <th>Nama</th>
                             <th>Tgl Lahir</th>
                             <th>Jenis kelamin</th>
-                            <th>Telp</th>
-                            <th>Kelas</th>
                             <th>...</th>
                         </tr>
                     </thead>
@@ -56,8 +48,6 @@
                              <td>{{$murid->nama}}</td>
                              <td>{{$murid->tanggal_lahir}}</td>
                              <td>{{$murid->jenis_kelamin}}</td>
-                             <td>{{ !empty($murid->telepon->no_telepon) ? $murid->telepon->no_telepon : '-' }}</td>
-                             <td>{{ $murid->kelas->nama_kelas }}</td>
                              <form action="{{url('siswa/'.$murid->id)}}" method="post">
                              <td>
                                  <a href="{{ url('siswa/'.$murid->id)}}">
@@ -74,14 +64,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="table-nav">
-                    <div class="jumlah_data">
-                        <strong>Jumlah Siswa : {{$jml_siswa}}</strong>
-                    </div>
-                    <div class="paging">
-                        {{$siswa->links()}}
-                    </div>
-                </div>
             </div>
           @else
               

@@ -47,13 +47,19 @@
 Route::get('/', 'HomepageController@index');
 Route::get('about', 'AboutController@index');
 //Route::get('siswa', 'SiswaController@index');
-Route::get('siswa', 'SiswaController@paging');
-Route::get('siswa/create', 'SiswaController@create');
-Route::post('siswa', 'SiswaController@store');
-Route::get('siswa/{id_siswa}', 'SiswaController@show');
-Route::get('siswa/{id_siswa}/edit', 'SiswaController@edit');
-Route::patch('siswa/{id_siswa}', 'SiswaController@update');
-Route::delete('siswa/{id_siswa}', 'SiswaController@destroy');
+
+Route::get('siswa/cari', 'SiswaController@cari');
+Route::group(['midleware' => ['web']], function(){
+    Route::resource('siswa', 'SiswaController');
+});
+// Route::get('siswa', 'SiswaController@paging');
+// Route::get('siswa/create', 'SiswaController@create');
+// Route::post('siswa', 'SiswaController@store');
+// Route::get('siswa/{id_siswa}', 'SiswaController@show');
+// Route::get('siswa/{id_siswa}/edit', 'SiswaController@edit');
+// Route::patch('siswa/{id_siswa}', 'SiswaController@update');
+// Route::delete('siswa/{id_siswa}', 'SiswaController@destroy');
+
 
 Route::get('tes-collection', 'SiswaController@tesCollection');
 Route::get('date-mutator', 'SiswaController@dateMutator');

@@ -120,6 +120,34 @@
                     @endif
                 </div>
             </div>
+            <div class="form-group">
+                <label for="hobi" class="control-label">Hobi *</label>
+                <div class="col-md-4">
+                    @foreach ($list_hobi as $hob)
+                        @php
+                            $cek = 'true';
+                        @endphp
+                        @foreach ($siswa->hobi  as $hb)
+                            @if ($hob->id == $hb->id) 
+                                <label for="">
+                                    <input type="checkbox" name="hobi[]" value="{{ $hob->id }}" checked>{{ $hob->nama_hobi }}</label><br />
+                                @php
+                                    $cek = 'false';
+                                @endphp
+                                @break
+                            @endif
+                        @endforeach
+                        @if ($cek == 'true')
+                            <label for=""><input type="checkbox" name="hobi[]" value="{{ $hob->id }}">{{ $hob->nama_hobi }}</label><br>
+                        @endif
+                    @endforeach
+                    @if ($errors->has('hobi'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ $errors->first('hobi')}}
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
         <br />
         <button type="submit" class="btn btn-primary">Submit</button>

@@ -16,9 +16,8 @@ class SiswaController extends Controller
 {
     //
     public function index(){
-        // $siswa = ["Abdul", "Budi", "Caca", "Dedi", "Eni", "Faijo"];
-        $siswa = Siswa::all();
-        $jml_siswa = $siswa->count();
+        $siswa = Siswa::orderBy('nisn', 'asc')->paginate(5);
+        $jml_siswa = Siswa::count();
         return view('siswa.index', compact('siswa', 'jml_siswa'));
     }
 
@@ -73,7 +72,8 @@ class SiswaController extends Controller
         $siswa->no_telepon = (!empty($siswa->telepon->no_telepon) ? $siswa->telepon->no_telepon : '-');
         
         $list_kelas = Kelas::all();
-        return view('siswa.edit', compact('siswa', 'list_kelas'));
+        $list_hobi = Hobi::all();
+        return view('siswa.edit', compact('siswa', 'list_kelas', 'list_hobi'));
     }
 
     // INI YANG LAMA
@@ -98,6 +98,10 @@ class SiswaController extends Controller
         $telepon = $siswa->telepon;
         $telepon->no_telepon = $request->input('no_telepon');
         $siswa->telepon()->save($telepon);
+
+        if(!is_null($request->input('hobi'))){
+            $siswa->hobi()->sync($request->input('hobi'));
+        }
 
         $request->session()->flash('flash_msg', "Data terlah berhasil diupdate");
         return redirect('siswa');
@@ -139,5 +143,19 @@ class SiswaController extends Controller
         $siswa = Siswa::findOrFail(4);
         return 'Tanggal Lahir Siswa <b>'.$siswa->nama. '</b> : '.$siswa->tanggal_lahir->format('d M Y').' Umurnya sekarang : '.$siswa->tanggal_lahir->age.' tahun';
         //dd($siswa->created_at);
+    }
+
+    public function cari(Request $request){
+        if(!empty($request->input('key')) || $request->input('key') != null){
+            $key = $request->input('key');
+            $sql = Siswa::where('nama', 'LIKE', '%'.$key.'%');
+            $siswa = $sql->paginate(5);
+            $jml_siswa = $siswa->total();
+            return view('siswa.index', compact('siswa', 'key', 'jml_siswa'));
+        }
+        else {
+            Session:flash('flash_msg', "Input Pencarian harus diisi");
+            return redirect('siswa');
+        }
     }
 }
